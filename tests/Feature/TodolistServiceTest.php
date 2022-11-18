@@ -56,4 +56,24 @@ class TodolistServiceTest extends TestCase
 
         self::assertEquals($expected, $this->todolistService->getTodolist());
     }
+
+    public function testRemoveTodo()
+    {
+        $this->todolistService->saveTodo("1", "slm");
+        $this->todolistService->saveTodo("2", "man");
+
+        self::assertEquals(2, sizeof($this->todolistService->getTodolist()));
+
+        $this->todolistService->removeTodo("3");
+
+        self::assertEquals(2, sizeof($this->todolistService->getTodolist()));
+
+        $this->todolistService->removeTodo("1");
+
+        self::assertEquals(1, sizeof($this->todolistService->getTodolist()));
+
+        $this->todolistService->removeTodo("2");
+
+        self::assertEquals(0, sizeof($this->todolistService->getTodolist()));
+    }
 }
