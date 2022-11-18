@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\services\TodolistService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -33,5 +31,29 @@ class TodolistServiceTest extends TestCase
             self::assertEquals("slm", $value["todo"]);
 
         }
+    }
+
+    public function testGetTodolistEmpty()
+    {
+        self::assertEquals([], $this->todolistService->getTodolist());
+    }
+
+    public function testGetTodolistNotEmpty()
+    {
+        $expected = [
+            [
+                "id" => "1",
+                "todo" => "slm",
+            ],
+            [
+                "id" => "2",
+                "todo" => "man"
+            ]
+        ];
+
+        $this->todolistService->saveTodo("1", "slm");
+        $this->todolistService->saveTodo("2", "man");
+
+        self::assertEquals($expected, $this->todolistService->getTodolist());
     }
 }
